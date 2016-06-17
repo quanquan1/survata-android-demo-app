@@ -37,7 +37,10 @@ public class QuestionActivity extends Activity{
     private Button mCreateSurvey;
     private ViewGroup mContainer;
 
+    private int index;
     private int currentPercentage;
+    private int currentLife = 100;
+    private int qsAnswered = 0;
 
     private Question mCurrentQuestion;
     private Questions mQuestions = new Questions();
@@ -90,14 +93,29 @@ public class QuestionActivity extends Activity{
 
             }
         });
-
-        loadQuestion();
+        Random r = new Random();
+        index = r.nextInt(43);
+        mCurrentQuestion = mQuestions.getQuestion(index);
         checkSurvey();
     }
     private void loadQuestion() {
+        int guess = mSeekBar.getProgress();
+        int actualPercentage = mCurrentQuestion.getPercentage();
+        int difference = Math.abs(guess - actualPercentage);
+
+        if((currentLife - difference) <= 0){ // end game
+            mLifeTextView.setText("0%");
+            Toast.makeText(getApplicationContext(), "You answered " + qsAnswered+" questions!", Toast.LENGTH_SHORT).show();
+            //add new activity & intent here
+        } else {
+            qsAnswered += 1;
+            currentLife -= difference;
+            String lifeString = "" + difference + "%";
+            mLifeTextView.setText(lifeString);
+        }
         Random r = new Random();
-        int randomInt = r.nextInt(43);
-        mCurrentQuestion = mQuestions.getQuestion(randomInt);
+        index = r.nextInt(43);
+        mCurrentQuestion = mQuestions.getQuestion(index);
 
         String questionText = mCurrentQuestion.getName();
         mQuestionTextView.setText(questionText);
