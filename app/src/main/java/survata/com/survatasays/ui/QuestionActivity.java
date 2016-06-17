@@ -202,13 +202,10 @@ public class QuestionActivity extends Activity{
     }
 
     private void showFullView() {
-        mSeekBar.setVisibility(View.GONE);
-        mCreateSurvey.setVisibility(View.GONE);
-        mContainer.setVisibility(View.GONE);
+
     }
 
     private void showCreateSurveyWallButton() {
-        mSeekBar.setVisibility(View.GONE);
         mCreateSurvey.setVisibility(View.VISIBLE);
         mContainer.setVisibility(View.VISIBLE);
     }
