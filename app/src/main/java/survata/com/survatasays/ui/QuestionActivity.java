@@ -14,9 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.survata.Survey;
+import com.survata.SurveyOption;
+
+import java.util.Random;
 
 import survata.com.survatasays.R;
 import survata.com.survatasays.model.Question;
+import survata.com.survatasays.model.Questions;
 import survata.com.survatasays.util.Settings;
 
 public class QuestionActivity extends Activity{
@@ -36,6 +40,7 @@ public class QuestionActivity extends Activity{
     private int currentPercentage;
 
     private Question mCurrentQuestion;
+    private Questions mQuestions = new Questions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,13 @@ public class QuestionActivity extends Activity{
         mEnterButton = (Button) findViewById(R.id.enterButton);
         mHeartImageView = (ImageView) findViewById(R.id.heartImageView);
         mContainer = (ViewGroup) findViewById(R.id.container);
+
+        mEnterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadQuestion();
+            }
+        });
 
         mCreateSurvey = (Button)findViewById(R.id.create_survey);
         mCreateSurvey.setOnClickListener(new View.OnClickListener() {
@@ -78,23 +90,35 @@ public class QuestionActivity extends Activity{
 
             }
         });
+
+        loadQuestion();
+        checkSurvey();
+    }
+    private void loadQuestion() {
+        Random r = new Random();
+        int randomInt = r.nextInt(43);
+        mCurrentQuestion = mQuestions.getQuestion(randomInt);
+
+        String questionText = mCurrentQuestion.getName();
+        mQuestionTextView.setText(questionText);
+
     }
 
     public void checkSurvey() {
         // show loading default
         showLoadingSurveyView();
 
-        final Context context = getContext();
+        final Context context = getApplicationContext();//ask Evan
         String publisherId = Settings.getPublisherId(context);
-        SurveyDebugOption option = new SurveyDebugOption(publisherId);
-        option.preview = Settings.getPreviewId(context);
-        option.zipcode = Settings.getZipCode(context);
-        option.sendZipcode = Settings.getZipCodeEnable(context);
+        SurveyOption option = new SurveyOption(publisherId);
+//        option.preview = Settings.getPreviewId(context);
+//        option.zipcode = Settings.getZipCode(context);
+//        option.sendZipcode = Settings.getZipCodeEnable(context);
         option.contentName = Settings.getContentName(context);
 
         mSurvey = new Survey(option);
 //        Survey.setSurvataLogger(mSurvataLogger);
-        mSurvey.create(getActivity(),
+        mSurvey.create(this, //getActivity();
                 new Survey.SurveyAvailabilityListener() {
                     @Override
                     public void onSurveyAvailable(Survey.SurveyAvailability surveyAvailability) {
@@ -125,7 +149,7 @@ public class QuestionActivity extends Activity{
     private void showSurvey() {
         //blur();
 
-        final Activity activity = getActivity();
+        final Activity activity = this; //getActivity();
 
         mSurvey.createSurveyWall(activity, new Survey.SurveyStatusListener() {
             @Override

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.survata.R;
+import survata.com.survatasays.R;
 
 public class Settings {
 
