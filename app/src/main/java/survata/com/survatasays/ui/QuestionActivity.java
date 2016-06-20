@@ -38,9 +38,10 @@ public class QuestionActivity extends Activity{
     private ViewGroup mContainer;
 
     private int index;
-    private int currentPercentage;
-    private int currentLife = 100;
-    private int qsAnswered = 0;
+    private int currentPercentage = 50;
+    private String questionText;
+    public int currentLife = 100;
+    public int qsAnswered = 0;
 
     private Question mCurrentQuestion;
     private Questions mQuestions = new Questions();
@@ -59,6 +60,10 @@ public class QuestionActivity extends Activity{
         mEnterButton = (Button) findViewById(R.id.enterButton);
         mHeartImageView = (ImageView) findViewById(R.id.heartImageView);
         mContainer = (ViewGroup) findViewById(R.id.container);
+
+        currentLife = 100;
+        mLifeTextView.setText(currentLife + "%");
+        qsAnswered = 0;
 
         mEnterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,21 +101,27 @@ public class QuestionActivity extends Activity{
         Random r = new Random();
         index = r.nextInt(43);
         mCurrentQuestion = mQuestions.getQuestion(index);
+        questionText = mCurrentQuestion.getName();
+        mQuestionTextView.setText(questionText);
+
         checkSurvey();
     }
     private void loadQuestion() {
         int guess = mSeekBar.getProgress();
         int actualPercentage = mCurrentQuestion.getPercentage();
         int difference = Math.abs(guess - actualPercentage);
-
+        Toast.makeText(getApplicationContext(), "The actual percentage is " + mCurrentQuestion.getPercentage()+"!", Toast.LENGTH_SHORT).show();
         if((currentLife - difference) <= 0){ // end game
             mLifeTextView.setText("0%");
+            Intent intent = new Intent(this, EndActivity.class);
+            intent.putExtra("questionsAnswered", qsAnswered);
+            startActivity(intent);
             Toast.makeText(getApplicationContext(), "You answered " + qsAnswered+" questions!", Toast.LENGTH_SHORT).show();
             //add new activity & intent here
         } else {
             qsAnswered += 1;
-            currentLife -= difference;
-            String lifeString = "" + difference + "%";
+            currentLife = currentLife - difference;
+            String lifeString = "" + currentLife + "%";
             mLifeTextView.setText(lifeString);
         }
         Random r = new Random();
@@ -179,6 +190,7 @@ public class QuestionActivity extends Activity{
 
                     case COMPLETED:
                         info = "completed";
+                        currentLife += 20;
                         showFullView();
                         break;
                     case SKIPPED:
@@ -205,6 +217,7 @@ public class QuestionActivity extends Activity{
 
     }
 
+
     private void showCreateSurveyWallButton() {
         mCreateSurvey.setVisibility(View.VISIBLE);
         mContainer.setVisibility(View.VISIBLE);
@@ -216,7 +229,17 @@ public class QuestionActivity extends Activity{
         mContainer.setVisibility(View.VISIBLE);
     }
 
-//    public void blur() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        currentLife = 100;
+        mLifeTextView.setText(currentLife + "%");
+        qsAnswered = 0;
+        mSeekBar.setProgress(50);
+        mPercentageTextView.setText(Integer.toString(currentPercentage));
+    }
+
+    //    public void blur() {
 //        Activity activity = getActivity();
 //
 //        if (activity == null) {
