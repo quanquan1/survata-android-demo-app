@@ -38,8 +38,6 @@ public class EndActivity extends AppCompatActivity {
 
     private void playAgain(){
         Intent intent = new Intent(this, QuestionActivity.class);
-//        intent.putExtra("questionsAnswered", qsAnswered);
-//        intent.putExtra("")
         startActivity(intent);
     }
 }

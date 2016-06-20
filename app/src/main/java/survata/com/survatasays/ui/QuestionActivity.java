@@ -111,13 +111,12 @@ public class QuestionActivity extends Activity{
         int actualPercentage = mCurrentQuestion.getPercentage();
         int difference = Math.abs(guess - actualPercentage);
         Toast.makeText(getApplicationContext(), "The actual percentage is " + mCurrentQuestion.getPercentage()+"!", Toast.LENGTH_SHORT).show();
-        if((currentLife - difference) <= 0){ // end game
+        if((currentLife - difference) <= 0){
             mLifeTextView.setText("0%");
             Intent intent = new Intent(this, EndActivity.class);
             intent.putExtra("questionsAnswered", qsAnswered);
             startActivity(intent);
             Toast.makeText(getApplicationContext(), "You answered " + qsAnswered+" questions!", Toast.LENGTH_SHORT).show();
-            //add new activity & intent here
         } else {
             qsAnswered += 1;
             currentLife = currentLife - difference;
@@ -137,7 +136,7 @@ public class QuestionActivity extends Activity{
         // show loading default
         showLoadingSurveyView();
 
-        final Context context = getApplicationContext();//ask Evan
+        final Context context = getApplicationContext();
         String publisherId = Settings.getPublisherId(context);
         SurveyOption option = new SurveyOption(publisherId);
 //        option.preview = Settings.getPreviewId(context);
@@ -171,14 +170,14 @@ public class QuestionActivity extends Activity{
                             default:
                                 break;
                         }
-                        Toast.makeText(context, "'/create' call result : " + info, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context, "'/create' call result : " + info, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
     private void showSurvey() {
-        //blur();
 
-        final Activity activity = this; //getActivity();
+
+        final Activity activity = this;
 
         mSurvey.createSurveyWall(activity, new Survey.SurveyStatusListener() {
             @Override
@@ -239,33 +238,4 @@ public class QuestionActivity extends Activity{
         mPercentageTextView.setText(Integer.toString(currentPercentage));
     }
 
-    //    public void blur() {
-//        Activity activity = getActivity();
-//
-//        if (activity == null) {
-//            Log.d(TAG, "activity is null");
-//            return;
-//        }
-//
-//        if (!mBlurred) {
-//            ViewGroup viewGroup = (ViewGroup) activity.getWindow().getDecorView().findViewById(android.R.id.content);
-//            Blurry.with(activity).sampling(12).onto(viewGroup);
-//            mBlurred = true;
-//        }
-//    }
-//
-//    public void unBlur() {
-//        Activity activity = getActivity();
-//
-//        if (activity == null) {
-//            Log.d(TAG, "activity is null");
-//            return;
-//        }
-//
-//        if (mBlurred) {
-//            ViewGroup viewGroup = (ViewGroup) getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-//            Blurry.delete(viewGroup);
-//            mBlurred = false;
-//        }
-//    }
 }
