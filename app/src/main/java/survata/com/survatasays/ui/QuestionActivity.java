@@ -201,6 +201,9 @@ public class QuestionActivity extends Activity{
                     case CREDIT_EARNED:
                         info = "credit earned";
                         break;
+                    case NO_SURVEY_AVAILABLE:
+                        info = "no survey available";
+                        break;
                     case NETWORK_NOT_AVAILABLE:
                         info = "network not available";
                         break;
