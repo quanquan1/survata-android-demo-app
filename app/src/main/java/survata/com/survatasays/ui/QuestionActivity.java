@@ -116,7 +116,7 @@ public class QuestionActivity extends Activity{
             Intent intent = new Intent(this, EndActivity.class);
             intent.putExtra("questionsAnswered", qsAnswered);
             startActivity(intent);
-            Toast.makeText(getApplicationContext(), "You answered " + qsAnswered+" questions!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "You answered " + qsAnswered+" questions!", Toast.LENGTH_SHORT).show();
         } else {
             qsAnswered += 1;
             currentLife = currentLife - difference;
