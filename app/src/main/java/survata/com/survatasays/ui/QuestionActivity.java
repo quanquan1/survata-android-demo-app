@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class QuestionActivity extends Activity{
     private Survey mSurvey;
     private Button mCreateSurvey;
     private ViewGroup mContainer;
+    private ImageButton mSettingsButton;
 
     private int index;
     private int currentPercentage = 50;
@@ -60,6 +62,7 @@ public class QuestionActivity extends Activity{
         mEnterButton = (Button) findViewById(R.id.enterButton);
         mHeartImageView = (ImageView) findViewById(R.id.heartImageView);
         mContainer = (ViewGroup) findViewById(R.id.container);
+        mSettingsButton = (ImageButton) findViewById(R.id.settingsButton);
 
         currentLife = 100;
         mLifeTextView.setText(currentLife + "%");
