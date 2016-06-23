@@ -83,6 +83,13 @@ public class QuestionActivity extends Activity{
             }
         });
 
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSettings();
+            }
+        });
+
         mSeekBar.setProgress(50);
         mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -188,7 +195,7 @@ public class QuestionActivity extends Activity{
                 Log.d(TAG, "surveyEvents: " + surveyEvents);
 
                 String info = "";
-                switch (surveyEvents){
+                switch (surveyEvents) {
 
                     case COMPLETED:
                         info = "completed";
@@ -232,6 +239,11 @@ public class QuestionActivity extends Activity{
         mSeekBar.setVisibility(View.VISIBLE);
         mCreateSurvey.setVisibility(View.GONE);
         mContainer.setVisibility(View.VISIBLE);
+    }
+
+    private void showSettings(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     @Override

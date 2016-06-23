@@ -30,6 +30,10 @@
         </activity>
         <activity android:name=".ui.EndActivity">
         </activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/title_activity_settings">
+        </activity>
     </application>
 
 </manifest>
